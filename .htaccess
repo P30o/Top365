@@ -5,72 +5,40 @@ RewriteEngine On
 RewriteCond %{HTTPS} off
 RewriteRule ^ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
 
-# حماية ملفات النظام مثل .env و .git
+# منع الوصول إلى ملف .htaccess
+<Files .htaccess>
+    Order Deny,Allow
+    Deny from all
+</Files>
+
+# منع تحميل الموقع باستخدام أدوات مثل wget و curl
+RewriteCond %{HTTP_USER_AGENT} ^(wget|curl) [NC]
+RewriteRule .* - [F]
+
+# منع الوصول إلى ملفات HTML و CSS و JS عبر الرابط المباشر
+<FilesMatch "\.(html|css|js)$">
+    Order Deny,Allow
+    Deny from all
+</FilesMatch>
+
+# منع الوصول إلى ملفات النظام مثل .env و .git
 <FilesMatch "^(\.env|\.git)">
     Order Deny,Allow
     Deny from all
 </FilesMatch>
 
-# حماية ملفات API (حظر الوصول من جميع الـ IPs ما عدا IP معين)
-<FilesMatch ".*">
-    Order Deny,Allow
-    Deny from all
-    Allow from xx.xx.xx.xx  # استبدل بـ IP المسموح له
-</FilesMatch>
-
-# منع الوصول إلى ملفات JavaScript
-<FilesMatch "\.(js)$">
-    Order Deny,Allow
-    Deny from all
-</FilesMatch>
-
-# منع الوصول إلى مجلدات خاصة (مثل مجلدات الرفع أو النظام)
-<Directory "/path/to/your/directory">
-    Order Deny,Allow
-    Deny from all
-</Directory>
-
-# منع الوصول إلى الملفات عبر الرابط المباشر
+# منع الوصول إلى الملفات عبر مصادر غير معروفة
 RewriteCond %{HTTP_REFERER} !^https?://(www\.)?yourwebsite\.com [NC]
-RewriteRule \.(jpg|jpeg|png|gif|js|css)$ - [F]
+RewriteRule \.(js|css|html)$ - [F]
 
-# حماية ضد هجمات CSRF (Cross-Site Request Forgery)
-# منع تحميل الملفات من مصادر غير معروفة
-Header always set X-Content-Type-Options "nosniff"
-Header always set X-XSS-Protection "1; mode=block"
+# حماية ضد XSS (Cross-Site Scripting)
+Header set X-XSS-Protection "1; mode=block"
+
+# حماية ضد Clickjacking
 Header always set X-Frame-Options "DENY"
 
-# منع الوصول إلى ملفات الـ .htaccess نفسها
-<Files ".htaccess">
-    Order Deny,Allow
-    Deny from all
-</Files>
+# منع الكشف عن نوع المحتوى
+Header always set X-Content-Type-Options "nosniff"
 
-# منع الوصول إلى مجلدات الـ wp-admin في WordPress أو أي مجلدات أخرى
-<Directory "/path/to/your/wordpress/wp-admin">
-    Order Deny,Allow
-    Deny from all
-</Directory>
-
-# حماية من هجمات DDoS (التوقف عن المحاولات المتكررة)
-<Limit GET POST>
-    Order Deny,Allow
-    Deny from all
-    Allow from xx.xx.xx.xx  # استبدل بـ IP المسموح له
-</Limit>
-
-# حماية ملفات الصور والفيديوهات من الرفع المباشر
-RewriteCond %{HTTP_REFERER} !^https?://(www\.)?yourwebsite\.com [NC]
-RewriteRule \.(jpg|jpeg|png|gif|mp4|webm)$ - [F]
-
-# حظر الوصول إلى ملفات الـ logs
-<FilesMatch "^.*\.(log|sql|bak|swp)">
-    Order Deny,Allow
-    Deny from all
-</FilesMatch>
-
-# حظر الوصول إلى ملفات النسخ الاحتياطي مثل .zip أو .tar
-<FilesMatch "\.(zip|tar|gz|rar)">
-    Order Deny,Allow
-    Deny from all
-</FilesMatch>
+# حماية من CSRF (Cross-Site Request Forgery)
+Header set Strict-Transport-Security "max-age=31536000; includeSubDomains"
