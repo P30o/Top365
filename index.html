@@ -144,6 +144,41 @@
     });
 </script>
 
+    <script type="text/javascript">
+    // منع النقر الأيمن على الصفحة
+    document.addEventListener("contextmenu", function(e) {
+        e.preventDefault();
+        alert("Right-click is disabled on this page.");
+    });
+
+    // منع النص من التحديد
+    document.addEventListener("selectstart", function(e) {
+        e.preventDefault();
+    });
+
+    // منع فحص الكود عبر Ctrl+U أو View Source
+    document.onkeydown = function(e) {
+        if (e.ctrlKey && e.keyCode == 85) {  // Ctrl+U
+            e.preventDefault();
+            alert("Viewing source is disabled.");
+        }
+    }
+
+    // منع المستخدمين من النقر على الزر "نسخ" باستخدام زر الفأرة الأيمن
+    document.addEventListener('copy', function(e) {
+        e.preventDefault();
+        alert("Copying content is disabled.");
+    });
+
+    // إضافة المزيد من الإجراءات لحماية النصوص
+    document.addEventListener('keydown', function(event) {
+        if (event.ctrlKey && (event.keyCode === 67 || event.keyCode === 83 || event.keyCode === 73)) {
+            event.preventDefault();
+            alert("This action has been disabled.");
+        }
+    });
+</script>
+
 
 </body>
 </html>
