@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@200;300;400;500;700;800;900&display=swap" rel="stylesheet">
+    <title>منيو الحلويات</title>
+    <style>
+        /* تنسيق عام */
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Tajawal', sans-serif;
+            background-image: url('test.jpg'); /* صورة الخلفية */
+            background-size: cover;
+            background-position: center;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: white;
+            position: relative;
+        }
+
+        /* تنسيق الهيدر */
+        header {
+            text-align: center;
+            z-index: 2;
+            position: relative;
+            opacity: 0;
+            animation: fadeIn 0.5s forwards; /* تقليص زمن التأثير */
+        }
+
+        header img {
+            width: 200px;
+            height: auto;
+            margin-bottom: 20px;
+            opacity: 0.9; /* شفافية الشعار */
+        }
+
+        /* زر تغيير اللغة بتصميم بسيط */
+        .language-btn {
+            background: transparent; /* خلفية شفافة */
+            color: white;
+            border: 2px solid #fff; /* حدود بيضاء */
+            padding: 15px 35px;
+            font-size: 22px;
+            font-weight: bold;
+            cursor: pointer;
+            position: absolute;
+            bottom: 300px; /* الزر تحت الشعار مباشرة */
+            left: 50%;
+            transform: translateX(-50%);
+            transition: all 0.2s ease; /* تقليل زمن الانتقال */
+            text-decoration: none; /* إزالة التسطير من الرابط */
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3); /* تأثير الظل الخفيف */
+            border-radius: 10px;
+            opacity: 0; /* بداية الزر غير مرئي */
+            animation: fadeInButton 1s forwards; /* تقليص زمن التأثير */
+        }
+
+        /* تأثير عند المرور على الزر */
+        .language-btn:hover {
+            background-color: rgba(255, 255, 255, 0.1); /* خلفية شفافة مع تأثير */
+            color: #fff;
+            transform: scale(1.05); /* تكبير الزر قليلاً عند المرور */
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.5); /* إضافة تأثير ظل */
+        }
+
+        /* إزالة تأثير الحركة عند الضغط */
+        .language-btn:active {
+            transform: scale(1); /* إزالة تأثير الحركة عند الضغط */
+            transition: transform 0.1s ease-in-out;
+        }
+
+        /* الفوتر بدون خلفية */
+        footer {
+            width: 100%;
+            text-align: center;
+            padding: 20px;
+            color: white;
+            font-size: 14px;
+            z-index: 2;
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            margin-top: 20px;
+            opacity: 0;
+            animation: fadeInFooter 0.5s forwards; /* تقليص زمن التأثير */
+        }
+
+        footer p {
+            margin: 0;
+            font-weight: bold;
+        }
+
+        /* تأثيرات الظهور التدريجي */
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        @keyframes fadeInButton {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        @keyframes fadeInFooter {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+    </style>
+</head>
+<body>
+
+    <!-- الهيدر مع شعار الكافتيريا -->
+    <header>
+        <img src="cafeteria-logo.png" alt="شعار الكافتيريا">
+    </header>
+
+    <!-- زر تغيير اللغة -->
+    <a href="language-page.html" class="language-btn" id="languageBtn">
+        اللغة العربية
+    </a>
+
+    <!-- الفوتر بدون خلفية -->
+    <footer>
+        <p>&copy; 2024 كافتيريا الحلويات | جميع الحقوق محفوظة</p>
+    </footer>
+
+<script>
+    document.addEventListener('contextmenu', function(e) {
+        e.preventDefault(); // تعطيل زر الماوس الأيمن
+    });
+
+    document.addEventListener('copy', function(e) {
+        e.preventDefault(); // تعطيل النسخ
+    });
+
+    document.addEventListener('selectstart', function(e) {
+        e.preventDefault(); // تعطيل التحديد
+    });
+</script>
+
+
+</body>
+</html>
